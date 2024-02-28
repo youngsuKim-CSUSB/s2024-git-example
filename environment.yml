@@ -1,0 +1,7 @@
+name: dawg-binder-example
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - matplotlib
+  - numpy
