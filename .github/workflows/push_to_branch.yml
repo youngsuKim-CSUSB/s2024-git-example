@@ -33,6 +33,7 @@ jobs:
         ls -all
         git add result.txt python_version.txt r_version.txt
         git commit -m "Update Python and R versions and result"
+        git pull origin output2
 
     - name: Push changes
       uses: ad-m/github-push-action@master
