@@ -1,5 +1,5 @@
 name: Write Result to Branch
-
+run-name: S2024 dawg demo
 on: [push]
   # push:
   #   branches:
