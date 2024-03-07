@@ -1,33 +1,23 @@
-name: Write Result to Branch
-run-name: S2024 dawg demo
-on: [push]
-  # push:
-  #   branches:
-  #     - main  # Trigger the workflow on pushes to the main branch
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2  # Checkout the repository
-
-    - name: Run Task and Save Result
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - name: Create local changes
       run: |
-        # Your task or script to generate the result
-        echo "Result of the task" > result.txt
-
-    - name: Commit Result to Branch
+        ...
+    - name: Commit files
       run: |
-        git config --global user.email "youngsu.kim@csusb.edu"
-        git config --global user.name "youngsuKim-CSUSB"
-        git add result.txt
-        git commit -m "Update result.txt with latest task result"
-        
-    - name: Push Changes to Branch
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -a -m "Add changes"
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        # github_token: ${{ secrets.GITHUB_TOKEN }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: demo_output  # Branch where you want to push the changes
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 
+          "output"
+          # ${{ github.ref }}
