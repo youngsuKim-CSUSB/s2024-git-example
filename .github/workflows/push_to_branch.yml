@@ -27,18 +27,26 @@ jobs:
         python -c "import sys; print(sys.version)" >> python_version.txt
         echo $(R --version) >> r_version.txt
         echo $(date +"Today's date is %A, %B %d, %Y") >> output.txt
+        cd python_files
+        for file in $(ls); do echo $file >> ../python_output.txt; done      
+        cd ..
+        #
+        cd r_files
+        for file in $(ls); do echo $file >> ../r_output.txt; done      
+        cd ..
+        #
+        cd text_files
+        for file in $(ls); do echo $file >> ../text_output.txt; done      
+        cd ..
 
-    
     - name: Commit Changes to Branch
       run: |
         git config --global user.email "youngsu.kim@csusb.edu"
         git config --global user.name "youngsuKim-CSUSB"
         ls -all
-        git add python_version.txt 
+        git add python_version.txt r_version.txt python_output.txt r_output.txt text_output.txt
         git status
-        git commit -m "Update Python and R versions and result"
-        # git config pull.rebase true 
-        # git pull origin output2
+        git commit -m "dawg demo edit files"
         
     - name: Push changes
       uses: ad-m/github-push-action@master
