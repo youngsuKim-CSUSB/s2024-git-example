@@ -35,12 +35,12 @@ jobs:
         git add python_version.txt 
         git status
         git commit -m "Update Python and R versions and result"
-        git config pull.rebase true 
-        git pull origin output2
+        # git config pull.rebase true 
+        # git pull origin output2
         
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: output
-        # force_with_lease: true
+        force_with_lease: true
