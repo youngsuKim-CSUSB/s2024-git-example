@@ -21,20 +21,24 @@ jobs:
           python-version: ${{ matrix.python-version }}
       # You can test your matrix by printing the current Python version
       - name: Display Python version
-        run: python -c "import sys; print(sys.version)" >> python_version.txt
+        run: |
+          python -c "import sys; print(sys.version)" >> python_version.txt
+          git add python_version.txt
       - name: Run Task and Save Result
         run: |
           # Your task or script to generate the result
           echo "Result of the task" > result.txt
       - name: Install R
         uses: r-lib/actions/setup-r@v2
-      - run: echo $(R --version) >> r_version.txt
+      - run: |
+          echo $(R --version) >> r_version.txt
+          git add r_version.txt
       - name: Commit Result to Branch
         run: |
           git config --global user.email "youngsu.kim@csusb.edu"
           git config --global user.name "youngsuKim-CSUSB"
-          git add result.txt
-          git commit -m "Update result.txt with latest task result"
+          git add result.txt 
+          git commit -m "github actions"
           
       - name: Push changes
         uses: ad-m/github-push-action@master
