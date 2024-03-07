@@ -18,26 +18,22 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
-    - name: Display Python version
-      run: |
-        python -c "import sys; print(sys.version)" >> python_version.txt
-        git add python_version.txt
-    - name: Run Task and Save Result
-      run: |
-        # Your task or script to generate the result
-        echo "Result of the task" > result.txt
     - name: Install R
       uses: r-lib/actions/setup-r@v2
-    - run: |
+    - name: Run Task and Save Result
+      run: |
+        echo "Result of the task" > result.txt
+        python -c "import sys; print(sys.version)" >> python_version.txt
         echo $(R --version) >> r_version.txt
-        git add r_version.txt
-    - name: Commit Result to Branch
+    
+    - name: Commit Changes to Branch
       run: |
         git config --global user.email "youngsu.kim@csusb.edu"
         git config --global user.name "youngsuKim-CSUSB"
-        git add result.txt 
-        git commit -m "github actions"
-        
+        ls -all
+        git add result.txt python_version.txt r_version.txt
+        git commit -m "Update Python and R versions and result"
+
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
