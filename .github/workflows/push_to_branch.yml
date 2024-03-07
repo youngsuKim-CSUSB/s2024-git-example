@@ -32,7 +32,7 @@ jobs:
         git config --global user.email "youngsu.kim@csusb.edu"
         git config --global user.name "youngsuKim-CSUSB"
         ls -all
-        git add result.txt python_version.txt r_version.txt
+        git add python_version.txt 
         git status
         git commit -m "Update Python and R versions and result"
         git pull origin output2
