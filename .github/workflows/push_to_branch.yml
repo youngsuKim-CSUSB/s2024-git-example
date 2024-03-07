@@ -25,7 +25,9 @@ jobs:
         # git checkout output
         git pull  
         python -c "import sys; print(sys.version)" >> python_version.txt
-        # echo $(R --version) >> r_version.txt
+        echo $(R --version) >> r_version.txt
+        echo $(date +"Today's date is %A, %B %d, %Y") >> output.txt
+
     
     - name: Commit Changes to Branch
       run: |
