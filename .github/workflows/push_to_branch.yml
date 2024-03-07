@@ -8,26 +8,35 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+    #     python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2  # Checkout the repository
-
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    - name: Install R
+      uses: r-lib/actions/setup-r@v2
     - name: Run Task and Save Result
       run: |
-        # Your task or script to generate the result
         echo "Result of the task" > result.txt
-
-    - name: Commit Result to Branch
+        python -c "import sys; print(sys.version)" >> python_version.txt
+        echo $(R --version) >> r_version.txt
+    
+    - name: Commit Changes to Branch
       run: |
         git config --global user.email "youngsu.kim@csusb.edu"
         git config --global user.name "youngsuKim-CSUSB"
-        git add result.txt
-        git commit -m "Update result.txt with latest task result"
-        
-    - name: Push Changes to Branch
+        ls -all
+        git add result.txt python_version.txt r_version.txt
+        git commit -m "Update Python and R versions and result"
+
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        # github_token: ${{ secrets.GITHUB_TOKEN }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: demo_output  # Branch where you want to push the changes
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: output2
+        # force_with_lease: true
